@@ -1,0 +1,44 @@
+{
+    "data":{
+       "vivo":[
+        {
+            "id" : 1,
+            "Name" :    "vivo X100 ",
+            "image" : "https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/w/e/d/-original-imagwyhjhkf8kjuy.jpeg?q=70",
+            "price" : "63,999",
+            "Configuration" : "(Asteroid Black, 256 GB)  (12 GB RAM)",
+            "Warranty" : "1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories"
+        },
+        {
+            "id" : 2,
+            "Name" : "vivo T2 Pro 5G ",
+            "image" : "https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/5/y/8/-original-imagtt4mhqrzjs9r.jpeg?q=70",
+            "price" : "24,999",
+            "Configuration" : "(Dune Gold, 256 GB)  (8 GB RAM)",
+            "Warranty" : "1 Year Manufacturer Warranty for Phone and 6 Months Warranty for In the Box Accessories"
+        },
+        {
+            "id" : 3,
+            "Name" : "vivo V25 5G ",
+            "image" : "https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/s/u/h/-original-imagtk6hfxxbbang.jpeg?q=70&crop=false",
+            "price" : "27,999",
+            "Configuration" : "(Sunrise Gold, 128 GB)  (8 GB RAM)",
+            "Warranty" : "1 Year of Device & 6 Months for In-Box Accessories"
+        },
+        {
+            "id" : 4,
+            "Name" : "vivo Y200e 5G ",
+            "image" : "https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/j/e/l/y200e-5g-v2336-vivo-original-imagya7gdtxepwgv.jpeg?q=70",
+            "price" : "20,999",
+            "Configuration" : "(Saffron Delight, 128 GB)  (8 GB RAM)",
+            "Warranty" : "1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories"
+        }
+
+       ],
+       "oppo":[
+        {},
+        {}
+       ]
+       
+    }
+}
