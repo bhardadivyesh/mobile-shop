@@ -27,8 +27,8 @@ function App() {
     <Router>
       <Routes>
         {/* client side routes */}
-        {/* <Route path="/" element={<Home />} /> */}
-        {/* <Route path='/aboutUs' element={<AboutUs />} />
+        {/* <Route path="/" element={<Home />} /> 
+         <Route path='/aboutUs' element={<AboutUs />} />
         <Route path='/contactUs' element={<ContactUs />}/>
         <Route path='/feedback' element={<Feedback />} />
         <Route path='/product' element={<Product />} />
@@ -36,7 +36,7 @@ function App() {
         <Route path='/signUp' element={<SignUp />} /> */}
 
         {/* admin side routes */}
-        <Route path='/' element={<Home /> }/>
+         <Route path='/' element={<Home /> }/>
         <Route path='/changeslider' element={<ChangeSlider />}/>
         <Route path='/viewfeedback' element={<ViewFeedback />} />
         <Route path='/addMainCategory' element={<AddMainCategory />}/>
@@ -47,8 +47,8 @@ function App() {
         <Route path='/ClientUser' element={<ClientUser />} />
         <Route path="/AdminUser" element={<AdminUser />} />
         <Route path='/PendingOrder' element={<PendingOrder />} />
-        <Route path='/ApprovedOrder' element={<ApprovedOrder />} />
-        
+        <Route path='/ApprovedOrder' element={<ApprovedOrder />} /> 
+      
 
       </Routes>
     </Router>

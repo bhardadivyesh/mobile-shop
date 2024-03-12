@@ -7,15 +7,33 @@ const Feedback = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
-
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch('http://localhost:3000/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (response.ok) {
+        console.log('Form data sent successfully');
+      } else {
+        console.error('Failed to send form data');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   return (
     <>
       <Navbar />
+      <h2 className="text-4xl text-center dark:text-white mt-5">Feedback</h2>
       <div className="p-10">
-      <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto bg-slate-300 p-10 rounded-lg">
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto bg-slate-600 p-10 rounded-lg">
   <div className="mb-4">
-    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
+    <label htmlFor="name" className="text-sm font-medium text-white">Name:</label>
     <input
       id="name"
       type="text"
@@ -27,7 +45,7 @@ const Feedback = () => {
   </div>
 
   <div className="mb-4">
-    <label htmlFor="number" className="block text-sm font-medium text-gray-700">Mobile Number:</label>
+    <label htmlFor="number" className="text-sm font-medium text-white">Mobile Number:</label>
     <input
       id="number"
       type="text"
@@ -39,7 +57,7 @@ const Feedback = () => {
   </div>
 
   <div className="mb-4">
-    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email:</label>
+    <label htmlFor="email" className="text-sm font-medium text-white">Email:</label>
     <input
       id="email"
       type="email"
@@ -51,7 +69,7 @@ const Feedback = () => {
   </div>
 
   <div className="mb-4">
-    <label htmlFor="feedback" className="block text-sm font-medium text-gray-700">Feedback:</label>
+    <label htmlFor="feedback" className="text-sm font-medium text-white">Feedback:</label>
     <textarea
       id="feedback"
       placeholder="Enter feedback here......"
