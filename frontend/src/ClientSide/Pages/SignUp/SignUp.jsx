@@ -1,28 +1,25 @@
 import Navbar from "../../component/Navbar/Navbar";
 import Footer from "../../component/Footer/Footer";
 import { useForm } from "react-hook-form";
-
 const SignUp = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  // const onSubmit = (data) => console.log(data);
   const onSubmit = async (data) => {
     try {
-      const response = await fetch('http://localhost:3000/registration', {
+      const response = await (await fetch('http://localhost:3000/registration', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-      });
-      
-      if (response.ok) {
-        console.log('Form data sent successfully');
+      })).json();
+      if (response.status === 'OK') {
+        console.log(response);
       } else {
-        console.error('Failed to send form data');
+        console.log(response);
       }
     } catch (error) {
       console.error('Error:', error);

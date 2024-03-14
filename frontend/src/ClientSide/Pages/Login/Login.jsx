@@ -2,6 +2,8 @@ import Navbar from "../../component/Navbar/Navbar"
 import Footer from "../../component/Footer/Footer"
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from 'axios'
 const Login = () =>{
 
   const navigate = useNavigate()
@@ -34,6 +36,12 @@ const Login = () =>{
       const handleSignUpClick = () =>{
         navigate("/signUp")
       }
+      useEffect(()=>{
+        axios.get('http://localhost:3000/registration').then((res)=>{
+          console.log(res.data);
+        })
+        
+      },[])
 
     return(
         <>
