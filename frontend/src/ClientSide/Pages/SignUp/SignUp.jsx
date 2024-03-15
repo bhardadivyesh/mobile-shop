@@ -1,6 +1,8 @@
 import Navbar from "../../component/Navbar/Navbar";
 import Footer from "../../component/Footer/Footer";
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const SignUp = () => {
   const {
     register,
@@ -9,17 +11,19 @@ const SignUp = () => {
   } = useForm();
   const onSubmit = async (data) => {
     try {
+      let updatedData = { ...data }; 
+      delete updatedData.ConfirmPassword;
       const response = await (await fetch('http://localhost:3000/registration', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(updatedData),
       })).json();
       if (response.status === 'OK') {
-        console.log(response);
+         toast(response.message);
       } else {
-        console.log(response);
+        toast(response.message);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -249,6 +253,7 @@ const SignUp = () => {
             Submit
           </button>
         </div>
+        <ToastContainer />
       </form>
       <Footer />
     </>

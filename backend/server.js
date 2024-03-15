@@ -2,24 +2,58 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const User = require('./user')
+const nodemailer = require('nodemailer');
+
+
 
 const cors = require("cors")
 const app = express();
 app.use(cors())
 app.use(bodyParser.json());
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'bhardadivyesh@gmail.com',
+    pass: '123456'
+  }
+});
+
 mongoose.connect('mongodb+srv://testUser:II326v46vW7mulyx@cluster0.cyvyuf0.mongodb.net/demo_auth?retryWrites=true&w=majority')
 
 // post data into the database
 app.post('/registration', async(req, res) => {
   const { email, name,ConfirmPassword,address,city,contactno1,contactno2,gender,password,photo,state,userId } = req.body;
+  console.log(req.body);
   try {
       const existingUser = await User.findOne({ email });
       if (existingUser) {
-          return res.json({ status:'FAILED',message: 'Email is already in use' });
+          return res.json({ status:'FAILED',message: 'Email is already Registered' });
       }
       const newUser = new User({  email, name,ConfirmPassword,address,city,contactno1,contactno2,gender,password,photo,state,userId });
       await newUser.save();
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'bhardadivyesh9@gmail.com',
+          pass: 'cdgn pjcx fjqq nneg'
+        }
+      });
+      console.log(email);
+      const mailOptions = {
+        from: 'bhardadivyesh9@gmail.com',
+        to: email,
+        subject: 'Welcome to our app',
+        text: 'You are Registered successfully on the mobile shop app enjoy and explore the app.'
+      };
+      
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error('Error:', error);
+        } else {
+          console.log('Email sent:', info.response);
+        }
+      });
       res.json({status:'OK', message: 'User registered successfully', user: newUser });
   } catch (error) {
       console.error('Error registering user:', error);
