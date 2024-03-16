@@ -1,19 +1,30 @@
 import Navbar from "../../component/Navbar/Navbar";
 import Footer from "../../component/Footer/Footer";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const SignUp = () => {
+  const [base64Image, setBase64Image] = useState(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
+    
     try {
       let updatedData = { ...data }; 
       delete updatedData.ConfirmPassword;
-      const response = await (await fetch('http://localhost:3000/registration', {
+      updatedData.photo = base64Image
+      console.log(updatedData);
+      const imageFile = data.photo[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(imageFile);
+      reader.onloadend = () => {
+        setBase64Image(reader.result);
+      };
+      const response = await (await fetch('http://localhost:3000/post-user-registration', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

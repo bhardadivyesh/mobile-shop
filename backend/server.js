@@ -1,20 +1,28 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose')
-const cors = require("cors")
-const registrationRoute  = require('./route/register/registrationRoutes')
+const mongoose = require('mongoose');
+const cors = require('cors');
+const registrationRoute = require('./route/register/registrationRoutes');
+const baseimageRoute = require('./route/register/baseimageRoute')
 
 const app = express();
-app.use(cors())
-app.use(bodyParser.json());
 
+// Middleware
+app.use(cors());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+// Connect to MongoDB
 mongoose.connect('mongodb+srv://testUser:II326v46vW7mulyx@cluster0.cyvyuf0.mongodb.net/demo_auth?retryWrites=true&w=majority')
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
+// Routes
 app.use(registrationRoute);
+app.use(baseimageRoute)
 
 // Start the server
-const port = 3000;
-app.listen(port, async () => {
-  
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

@@ -13,7 +13,7 @@ email: String,
 gender: String,
 name: String,
 password: String,
-photo: Array,
+photo: String,
 state: String,
 userId: String
   

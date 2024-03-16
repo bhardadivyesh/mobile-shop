@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
   });
 
 // post data into the database
-router.post('/registration', async(req, res) => {
+router.post('/post-user-registration', async(req, res) => {
     const { email, name,ConfirmPassword,address,city,contactno1,contactno2,gender,password,photo,state,userId } = req.body;
     console.log(req.body);
     try {
@@ -51,7 +51,7 @@ router.post('/registration', async(req, res) => {
     }
     });
   // get data into the nodejs
-router.get('/registration', async (req, res) => {
+router.get('/get-user-registration', async (req, res) => {
     try {
       let users = await User.find();
       res.status(200).json(users);
@@ -61,7 +61,7 @@ router.get('/registration', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' }); 
     }
   });
-router.delete('/registration', async (req, res) => {
+router.delete('/delete-user-registration', async (req, res) => {
     try {
       const userEmail = req.body.email; // Assuming the email is sent in the request body
       let deletedUser = await User.findOneAndDelete({ email: userEmail });
@@ -76,7 +76,7 @@ router.delete('/registration', async (req, res) => {
     }
   });
   // put request
-router.put('/registration', async (req, res) => {
+router.put('/put-user-registration', async (req, res) => {
     try {
       const userEmail = req.body.email; 
       const newData = req.body; 
