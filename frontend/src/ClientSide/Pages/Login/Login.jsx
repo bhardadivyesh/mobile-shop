@@ -9,9 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Login = () => {
   const [loginUser, setLoginUser] = useState();
   const [registeredUser, setRegisteredUser] = useState();
- 
   const navigate = useNavigate();
-
   const {
     register,
     handleSubmit,
@@ -25,11 +23,11 @@ const Login = () => {
        toast("login success")
        navigate("/")
       }
-      
+      else{
+        toast("wrong email and password")
+      }
     }
   };
-  
-
   const handleSignUpClick = () => {
     navigate("/signUp");
   };
