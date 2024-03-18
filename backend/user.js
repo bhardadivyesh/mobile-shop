@@ -15,7 +15,8 @@ name: String,
 password: String,
 photo: String,
 state: String,
-userId: String
+userId: String,
+otp : Number
   
 });
 

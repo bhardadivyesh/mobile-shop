@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const registrationRoute = require('./route/register/registrationRoutes');
 const baseimageRoute = require('./route/register/baseimageRoute')
-const otpvarification = require('./otpverification')
+const otpRoute = require('./otpSend')
 
 const app = express();
 
@@ -21,7 +21,7 @@ mongoose.connect('mongodb+srv://testUser:II326v46vW7mulyx@cluster0.cyvyuf0.mongo
 // Routes
 app.use(registrationRoute);
 app.use(baseimageRoute);
-app.use(otpvarification);
+app.use(otpRoute);
 
 // Start the server
 const port = process.env.PORT || 3000;
