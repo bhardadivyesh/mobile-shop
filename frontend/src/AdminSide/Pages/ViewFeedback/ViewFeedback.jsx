@@ -1,6 +1,16 @@
 import Navbar from "../../Component/Navbar/Navbar"
 import Footer from "../../Component/Footer/Footer"
+import { useEffect } from "react"
+import axios from "axios"
+import { useState } from "react"
 const ViewFeedback = () => {
+    const [feedbackData,setFeedbackData] = useState([])
+    useEffect(()=>{
+        axios.get('http://localhost:3000/get-feedback').then((res)=>{
+            setFeedbackData(res.data)
+        })
+    
+    },[])
   return (
     <>
     <Navbar />
@@ -29,23 +39,30 @@ const ViewFeedback = () => {
             </tr>
         </thead>
         <tbody>
-            <tr className="bg-white dark:bg-gray-800 border">
-                <th scope="row" className="px-6 py-4">
-                   <button className="rounded-sm bg-blue-950 text-white p-3">Delete</button>
-                </th>
-                <td className="px-6 py-4">
-                   Bharada divyesh
-                </td>
-                <td className="px-6 py-4">
-                    Nice order system
-                </td>
-                <td className="px-6 py-4">
-                    9327511543
-                </td>
-                <td className="px-6 py-4">
-                    admin@gmail.com
-                </td>
-            </tr>
+            {feedbackData?.map((items,index)=>{
+                return(
+                    <tr className="bg-white dark:bg-gray-800 border" key={index}>
+                    <th scope="row" className="px-6 py-4">
+                       <button className="rounded-sm bg-blue-950 text-white p-3">Delete</button>
+                    </th>
+                    <td className="px-6 py-4">
+                       {items.name}
+                    </td>
+                    <td className="px-6 py-4">
+                      {items.feedbackData}
+                    </td>
+                    <td className="px-6 py-4">
+                    {items.number}
+                    </td>
+                    <td className="px-6 py-4">
+                    {items.email}
+                    </td>
+                </tr>
+                    
+                )
+                 
+            })}
+          
         </tbody>
     </table>
 </div>

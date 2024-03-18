@@ -8,19 +8,20 @@ const Feedback = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
+    console.log(data);
     try {
-      const response = await fetch('http://localhost:3000/feedback', {
+    
+      const response = await (await fetch('http://localhost:3000/post-feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-      });
-      
-      if (response.ok) {
-        console.log('Form data sent successfully');
+      })).json();
+      if (response.status === 'OK') {
+       console.log("data send successfully");
       } else {
-        console.error('Failed to send form data');
+       console.log("data not send");
       }
     } catch (error) {
       console.error('Error:', error);
@@ -73,7 +74,7 @@ const Feedback = () => {
     <textarea
       id="feedback"
       placeholder="Enter feedback here......"
-      {...register("feedback", { required: true })}
+      {...register("feedbackData", { required: true })}
       className="mt-1 p-2 border rounded-md w-full"
     />
     {errors.feedback && <span className="text-red-500 text-sm">Enter feedback</span>}

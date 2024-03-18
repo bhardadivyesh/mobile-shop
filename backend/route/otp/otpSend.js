@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const otpdigit = require('./otp');
 const router = express.Router();
-const User = require('./user')
+const User = require('../../user')
 
 const otpRoute = express();
 

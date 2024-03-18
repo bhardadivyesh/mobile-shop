@@ -3,8 +3,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const registrationRoute = require('./route/register/registrationRoutes');
-const baseimageRoute = require('./route/register/baseimageRoute')
-const otpRoute = require('./otpSend')
+const baseimageRoute = require('./route/baseImage/baseimageRoute')
+const otpRoute = require('./route/otp/otpSend')
+const feedback = require('./route/feedback/feedbackRoute')
 
 const app = express();
 
@@ -22,6 +23,8 @@ mongoose.connect('mongodb+srv://testUser:II326v46vW7mulyx@cluster0.cyvyuf0.mongo
 app.use(registrationRoute);
 app.use(baseimageRoute);
 app.use(otpRoute);
+app.use(feedback);
+
 
 // Start the server
 const port = process.env.PORT || 3000;

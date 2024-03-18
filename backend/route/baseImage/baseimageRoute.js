@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const baseImage = require('../../baseImage');
+const baseImage = require('./baseImage');
 
 
 // post data into the database

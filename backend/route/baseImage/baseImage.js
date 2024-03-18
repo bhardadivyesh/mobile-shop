@@ -6,7 +6,6 @@ photo: String,
   
 });
 
-// Create the User model from the schema
 const baseImages = mongoose.model('baseImages', userSchema);
 
-module.exports = baseImages; // Export the User model
+module.exports = baseImages; 
