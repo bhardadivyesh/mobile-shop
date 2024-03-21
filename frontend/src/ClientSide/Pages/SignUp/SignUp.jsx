@@ -264,14 +264,8 @@ const SignUp = () => {
             Submit
           </button>
         </div>
-        <div>
-          <button
-            type="submit"
-            className="bg-green-800 w-2/4 text-white font-semibold px-4 py-2 rounded hover:bg-green-950"
-          >
-            Submit
-          </button>
-        </div>
+       
+       
         <ToastContainer />
       </form>
       <Footer />

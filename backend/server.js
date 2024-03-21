@@ -6,6 +6,8 @@ const registrationRoute = require('./route/register/registrationRoutes');
 const baseimageRoute = require('./route/baseImage/baseimageRoute')
 const otpRoute = require('./route/otp/otpSend')
 const feedback = require('./route/feedback/feedbackRoute')
+const admin = require('./setAdmin/setAdminRoute')
+
 
 const app = express();
 
@@ -24,6 +26,10 @@ app.use(registrationRoute);
 app.use(baseimageRoute);
 app.use(otpRoute);
 app.use(feedback);
+app.use(admin);
+
+
+
 
 
 // Start the server

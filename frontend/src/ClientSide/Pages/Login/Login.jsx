@@ -28,11 +28,12 @@ const Login = () => {
       }
     }
   };
+  
   const handleSignUpClick = () => {
     navigate("/signUp");
   };
   useEffect(() => {
-    axios.get("http://localhost:3000/registration").then((res) => {
+    axios.get("http://localhost:3000/get-user-registration").then((res) => {
       setRegisteredUser(res.data);
     });
   }, [loginUser]);

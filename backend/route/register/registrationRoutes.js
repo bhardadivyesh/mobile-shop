@@ -3,24 +3,28 @@ const router = express.Router();
 const User = require('../../user');
 const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'bhardadivyesh@gmail.com',
-      pass: '123456'
-    }
-  });
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//       user: 'bhardadivyesh@gmail.com',
+//       pass: '123456'
+//     }
+//   });
 
 // post data into the database
 router.post('/post-user-registration', async(req, res) => {
     const { email, name,ConfirmPassword,address,city,contactno1,contactno2,gender,password,photo,state,userId } = req.body;
     console.log(req.body);
+    const role = {
+      client : true,
+      admin : false,
+    }
     try {
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.json({ status:'FAILED',message: 'Email is already Registered' });
         }
-        const newUser = new User({  email, name,ConfirmPassword,address,city,contactno1,contactno2,gender,password,photo,state,userId });
+        const newUser = new User({  email, name,ConfirmPassword,address,city,contactno1,contactno2,gender,password,photo,state,userId,role });
         await newUser.save();
         const transporter = nodemailer.createTransport({
           service: 'gmail',

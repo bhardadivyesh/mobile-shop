@@ -16,7 +16,8 @@ password: String,
 photo: String,
 state: String,
 userId: String,
-otp : Number
+otp : Number,
+role : Object
   
 });
 
