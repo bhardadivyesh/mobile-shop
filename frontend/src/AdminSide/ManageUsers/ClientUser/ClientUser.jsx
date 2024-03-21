@@ -41,6 +41,8 @@ const ClientUser = () => {
         // You might want to handle errors more gracefully here, such as displaying an error message to the user
       });
   };
+  const clientUsers = users?.filter(user => user.role.client);
+  console.log(clientUsers);
 
   return (
     <>
@@ -90,7 +92,7 @@ const ClientUser = () => {
               </tr>
             </thead>
             <tbody>
-              {users?.map((items, index) => {
+              {clientUsers?.map((items, index) => {
                 return (
                   <tr className="bg-white dark:bg-gray-800 border" key={index}>
                     <th scope="row" className="px-6 py-4 flex space-x-4">
