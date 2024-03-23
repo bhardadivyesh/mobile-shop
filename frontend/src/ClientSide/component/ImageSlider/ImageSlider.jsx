@@ -1,10 +1,8 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import imageslider1 from "../../../assets/Sony product/imageslider1.avif" 
-import imageslider2 from "../../../assets/Sony product/imageslider2.avif"
-import imageslider3 from "../../../assets/Sony product/imageslider3.avif"
-import imageslider4 from "../../../assets/Sony product/imageslider4.avif"
+import { useState,useEffect } from 'react';
+import axios from 'axios'
 
 const settings = {
   dots: true,
@@ -17,22 +15,30 @@ const settings = {
 };
 
 const ImageSlider = () => {
+  const [sliderImages,setSliderImages] = useState({})
+  useEffect(()=>{
+    axios.get('http://localhost:3000/get-imageSlider').then((res)=>{
+      setSliderImages(res.data)
+    })
+  },[])
   return (
+    <>
     <Slider {...settings}>
       <div>
-        <img src={imageslider1} alt="Image 1" className='w-full h-72'/>
+        <img src={sliderImages[0]?.image1} alt="Image 1" className='w-full h-96'/>
       </div>
       <div>
-        <img src={imageslider2} alt="Image 2" className='w-full h-72' />
+        <img src={sliderImages[0]?.image2} alt="Image 2" className='w-full h-96' />
       </div>
       <div>
-        <img src={imageslider3} alt="Image 3" className='w-full h-72' />
+        <img src={sliderImages[0]?.image3} alt="Image 3" className='w-full h-96' />
       </div>
       <div>
-        <img src={imageslider4} alt="Image 3" className='w-full h-72' />
+        <img src={sliderImages[0]?.image4} alt="Image 3" className='w-full h-96' />
       </div>
      
     </Slider>
+    </>
   );
 };
 

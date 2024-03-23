@@ -3,14 +3,6 @@ const router = express.Router();
 const User = require('../../user');
 const nodemailer = require('nodemailer');
 
-// const transporter = nodemailer.createTransport({
-//     service: 'gmail',
-//     auth: {
-//       user: 'bhardadivyesh@gmail.com',
-//       pass: '123456'
-//     }
-//   });
-
 // post data into the database
 router.post('/post-user-registration', async(req, res) => {
     const { email, name,ConfirmPassword,address,city,contactno1,contactno2,gender,password,photo,state,userId } = req.body;

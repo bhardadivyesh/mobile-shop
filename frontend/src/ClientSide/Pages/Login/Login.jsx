@@ -1,5 +1,6 @@
-import Navbar from "../../component/Navbar/Navbar";
-import Footer from "../../component/Footer/Footer";
+/* eslint-disable react/prop-types */
+// import Navbar from "../../component/Navbar/Navbar";
+// import Footer from "../../component/Footer/Footer";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -17,17 +18,41 @@ const Login = () => {
   } = useForm();
   const onSubmit = (data) => {
     setLoginUser(data);
+    
+    // for (const user of registeredUser) {
+    //   if (user?.email == loginUser?.email && user?.password == loginUser?.password) {
+    //     if(user.role?.client){
+    //       navigate('/home')
+    //     }
+    //     else if(user.role?.admin){
+    //       navigate('/adminHome')
+    //     }
+    //   //  toast("login success")
+    //   //  navigate("/home")
+    //   console.log(user.role?.client);
+    //   }
+    //   else{
+    //     toast("wrong email and password")
+    //   }
+    // }
    
-    for (const user of registeredUser) {
-      if (user?.email == loginUser?.email && user?.password == loginUser?.password) {
-       toast("login success")
-       navigate("/")
-      }
-      else{
-        toast("wrong email and password")
+   
+  };
+  useEffect(() => {
+    if (loginUser) {
+      const foundUser = registeredUser?.find(user => user.email === loginUser.email && user.password === loginUser.password);
+      if (foundUser) {
+        if (foundUser.role.client) {
+          navigate('/home');
+        } else if (foundUser.role.admin) {
+          navigate('/adminHome');
+        }
+      } else {
+        toast.error("Incorrect email or password.");
       }
     }
-  };
+  }, [loginUser, registeredUser, navigate]);
+
   
   const handleSignUpClick = () => {
     navigate("/signUp");
@@ -40,7 +65,7 @@ const Login = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <h2 className="text-4xl text-center dark:text-white">Login</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -73,6 +98,7 @@ const Login = () => {
           <button
             type="submit"
             className="bg-green-800 text-white font-semibold px-4 py-2 rounded hover:bg-green-950"
+
           >
             Login
           </button>
@@ -87,7 +113,7 @@ const Login = () => {
         </div>
       </form>
       <ToastContainer />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

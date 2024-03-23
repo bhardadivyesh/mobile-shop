@@ -11,7 +11,7 @@ const Navbar = () => {
     
   }
   const handleLoginClick = () =>{
-    navigate("/login")
+    navigate("/")
   }
   const handleSignUpClick = () =>{
     navigate("/signUp")
@@ -28,7 +28,7 @@ const Navbar = () => {
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
                   <Link
-                    to="/"
+                    to="/home"
                     className="text-white rounded-md px-3 py-2 text-sm font-medium"
                     aria-current="page"
                   >

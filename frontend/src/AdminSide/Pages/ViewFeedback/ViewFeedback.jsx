@@ -4,14 +4,14 @@ import { useEffect } from "react"
 import axios from "axios"
 import { useState } from "react"
 const ViewFeedback = () => {
-    const [reRenderComponent,setRerenderComponent] = useState(false)
+    // const [reRenderComponent,setRerenderComponent] = useState(false)
     const [feedbackData,setFeedbackData] = useState([])
     useEffect(()=>{
         axios.get('http://localhost:3000/get-feedback').then((res)=>{
             setFeedbackData(res.data)
         })
     
-    },[reRenderComponent])
+    },[])
 const handleDeleteFeedback = (email) =>{
    
     axios.delete('http://localhost:3000/delete-feedback', {
@@ -19,7 +19,7 @@ const handleDeleteFeedback = (email) =>{
     })
     .then(response => {
         if (response.status === 200) {
-            setRerenderComponent(prevState => !prevState) 
+            // setRerenderComponent(prevState => !prevState) 
         }
     })
     .catch(error => {

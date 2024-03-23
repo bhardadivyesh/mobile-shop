@@ -9,6 +9,7 @@ import Login from "./ClientSide/Pages/Login/Login"
 import SignUp from './ClientSide/Pages/SignUp/SignUp';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+
 import Home from "./AdminSide/Pages/Home/Home"
 import ViewFeedback from "./AdminSide/Pages/ViewFeedback/ViewFeedback"
 import ChangeSlider from "./AdminSide/Pages/ChangeSlider/ChangeSlider"
@@ -21,9 +22,14 @@ import ClientUser from "./AdminSide/ManageUsers/ClientUser/ClientUser"
 import AdminUser from "./AdminSide/ManageUsers/AdminUser/AdminUser"
 import PendingOrder from "./AdminSide/Orders/PendingOrder/PendingOrder"
 import ApprovedOrder from "./AdminSide/Orders/ApprovedOrder/ApprovedOrder"
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [users, setUsers] = useState([]);
+
+  
+  // console.log(registeredUsers);
+  // const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:3000/get-user-registration')
@@ -34,15 +40,20 @@ function App() {
         console.error('Error fetching user data:', error);
       });
   }, []);
+ 
+
 
   return (
     <Router>
       <Routes>
+      <Route path='/' element={<Login />} />
+      <Route path='/signUp' element={<SignUp />} />
+
         {users.map(user => {
           if (user.role?.admin) {
             return (
               <React.Fragment key={user.id}>
-                <Route path='/' element={<Home />} />
+                <Route path='/adminHome' element={<Home />} />
                 <Route path='/changeslider' element={<ChangeSlider />} />
                 <Route path='/viewfeedback' element={<ViewFeedback />} />
                 <Route path='/addMainCategory' element={<AddMainCategory />} />
@@ -59,16 +70,16 @@ function App() {
           } else if (user.role?.client) {
             return (
               <React.Fragment key={user.id}>
-                <Route path="/" element={<Homeclient />} />
+                <Route path="/home" element={<Homeclient />} />
                 <Route path='/aboutUs' element={<AboutUs />} />
                 <Route path='/contactUs' element={<ContactUs />} />
                 <Route path='/feedback' element={<Feedback />} />
                 <Route path='/product' element={<Product />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/signUp' element={<SignUp />} />
+                
               </React.Fragment>
             );
           } else {
+            
             console.log(`${user.name} has an undefined role.`);
             return null; // or some default route
           }
