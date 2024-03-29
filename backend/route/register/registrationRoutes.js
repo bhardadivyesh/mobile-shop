@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const User = require('../../user');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
 
 // post data into the database
 router.post('/post-user-registration', async(req, res) => {
     const { email, name,ConfirmPassword,address,city,contactno1,contactno2,gender,password,photo,state,userId } = req.body;
-    console.log(req.body);
     const role = {
       client : true,
       admin : false,
@@ -25,7 +25,6 @@ router.post('/post-user-registration', async(req, res) => {
             pass: 'cdgn pjcx fjqq nneg'
           }
         });
-        console.log(email);
         const mailOptions = {
           from: 'bhardadivyesh9@gmail.com',
           to: email,
@@ -37,7 +36,7 @@ router.post('/post-user-registration', async(req, res) => {
           if (error) {
             console.error('Error:', error);
           } else {
-            console.log('Email sent:', info.response);
+            // console.log('Email sent:', info.response);
           }
         });
         res.json({status:'OK', message: 'User registered successfully', user: newUser });
@@ -49,9 +48,8 @@ router.post('/post-user-registration', async(req, res) => {
   // get data into the nodejs
 router.get('/get-user-registration', async (req, res) => {
     try {
-      let users = await User.find();
+      let users = await User.find().select('-password');
       res.status(200).json(users);
-      console.log(users);
     } catch (error) {
       
       res.status(500).json({ error: 'Internal Server Error' }); 
@@ -86,5 +84,30 @@ router.put('/put-user-registration', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' }); 
   }
   });
+  // Route for user login
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (user) {
+      if (user.email == email && user.password == password) {
+        const userData = { ...user.toObject() };
+        delete userData.password
+        res.json({ success: true, loginData : userData });
+      } else {
+        // Passwords do not match, login failed
+        res.json({ success: false, error: 'Incorrect email or password.' });
+      }
+    } else {
+      // User not found, login failed
+      res.json({ success: false, error: 'User not found.' });
+    }
+  } catch (error) {
+    console.error('Error logging in:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
 
 module.exports = router;

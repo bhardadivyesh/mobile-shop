@@ -6,7 +6,6 @@ const baseImage = require('./baseImage');
 // post data into the database
 router.post('/baseImage', async(req, res) => {
     const {photo } = req.body;
-    console.log(req.body);
     try {
       
         const newUser = new baseImage({photo});

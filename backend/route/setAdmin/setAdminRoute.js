@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 // const setAdmin = require('./setAdmin')
-const User = require('../user')
+const User = require('../../user')
 
 router.put('/setAdminRole', async (req, res) => {
   try {
     const userEmail = req.body.email;
-    console.log(userEmail);
+    // console.log(userEmail);
     const newRole = {
       client: false,
       admin: true,

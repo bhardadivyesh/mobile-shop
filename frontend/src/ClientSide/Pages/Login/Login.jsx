@@ -1,15 +1,9 @@
-/* eslint-disable react/prop-types */
-// import Navbar from "../../component/Navbar/Navbar";
-// import Footer from "../../component/Footer/Footer";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
-  const [loginUser, setLoginUser] = useState();
-  const [registeredUser, setRegisteredUser] = useState();
   const navigate = useNavigate();
   const {
     register,
@@ -17,52 +11,26 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    setLoginUser(data);
-    
-    // for (const user of registeredUser) {
-    //   if (user?.email == loginUser?.email && user?.password == loginUser?.password) {
-    //     if(user.role?.client){
-    //       navigate('/home')
-    //     }
-    //     else if(user.role?.admin){
-    //       navigate('/adminHome')
-    //     }
-    //   //  toast("login success")
-    //   //  navigate("/home")
-    //   console.log(user.role?.client);
-    //   }
-    //   else{
-    //     toast("wrong email and password")
-    //   }
-    // }
-   
-   
-  };
-  useEffect(() => {
-    if (loginUser) {
-      const foundUser = registeredUser?.find(user => user.email === loginUser.email && user.password === loginUser.password);
-      if (foundUser) {
-        if (foundUser.role.client) {
-          navigate('/home');
-        } else if (foundUser.role.admin) {
-          navigate('/adminHome');
-        }
-      } else {
-        toast.error("Incorrect email or password.");
-      }
+    try {
+      const { email, password } = data;
+      axios
+        .post("http://localhost:3000/login", { email, password })
+        .then((res) => {
+          if (res.data.loginData?.role?.client) {
+            navigate("/home");
+          } else if (res.data.loginData?.role?.admin) {
+            navigate("/adminHome");
+          } else {
+            toast("Invalid Email and Password");
+          }
+        });
+    } catch (error) {
+      console.error("Error logging in:", error);
     }
-  }, [loginUser, registeredUser, navigate]);
-
-  
+  };
   const handleSignUpClick = () => {
     navigate("/signUp");
   };
-  useEffect(() => {
-    axios.get("http://localhost:3000/get-user-registration").then((res) => {
-      setRegisteredUser(res.data);
-    });
-  }, [loginUser]);
-
   return (
     <>
       {/* <Navbar /> */}
@@ -98,7 +66,6 @@ const Login = () => {
           <button
             type="submit"
             className="bg-green-800 text-white font-semibold px-4 py-2 rounded hover:bg-green-950"
-
           >
             Login
           </button>

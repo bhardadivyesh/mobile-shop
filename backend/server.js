@@ -6,8 +6,10 @@ const registrationRoute = require('./route/register/registrationRoutes');
 const baseimageRoute = require('./route/baseImage/baseimageRoute')
 const otpRoute = require('./route/otp/otpSend')
 const feedback = require('./route/feedback/feedbackRoute')
-const admin = require('./setAdmin/setAdminRoute')
+const admin = require('./route/setAdmin/setAdminRoute')
 const sliderImage = require('./route/sliderImages/sliderImageRoute')
+require('dotenv').config();
+
 
 
 const app = express();
@@ -18,7 +20,8 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://testUser:II326v46vW7mulyx@cluster0.cyvyuf0.mongodb.net/demo_auth?retryWrites=true&w=majority')
+// mongoose.connect('mongodb+srv://testUser:II326v46vW7mulyx@cluster0.cyvyuf0.mongodb.net/demo_auth?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 

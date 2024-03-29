@@ -8,7 +8,6 @@ router.post("/post-feedback", async (req, res) => {
     const feedbacks = new feedbackModel({ name, number, email, feedbackData });
     await feedbacks.save();
     res.json({ status: "OK", message: "feedback send successfully" });
-    console.log(res.message);
   } catch (error) {
     console.error("Error feedback:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -17,7 +16,6 @@ router.post("/post-feedback", async (req, res) => {
 router.get("/get-feedback", async (req, res) => {
   try {
     let feedbacks = await feedbackModel.find();
-    console.log(feedbacks);
     res.status(200).json(feedbacks);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
@@ -26,9 +24,9 @@ router.get("/get-feedback", async (req, res) => {
 router.delete('/delete-feedback', async (req, res) => {
   try {
     const userEmail = req.body.email; 
-    // console.log(userEmail);
+
     let deletedUser = await feedbackModel.findOneAndDelete({ email: userEmail });
-    console.log(deletedUser);
+
     if (!deletedUser) {
       return res.status(404).json({ error: 'User not found' });
     }

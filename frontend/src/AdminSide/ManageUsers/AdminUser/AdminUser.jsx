@@ -5,6 +5,7 @@ import axios from "axios";
 const AdminUser = () => {
   // const [reRenderComponent, setRerenderComponent] = useState(true);
   const [users, setUsers] = useState();
+  console.log(users);
   const [reRenderComponent,setRerenderComponent] = useState(false)
   useEffect(() => {
     axios.get("http://localhost:3000/get-user-registration").then((res) => {
