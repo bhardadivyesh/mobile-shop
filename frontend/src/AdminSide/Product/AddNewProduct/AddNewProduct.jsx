@@ -1,31 +1,57 @@
 import Navbar from "../../Component/Navbar/Navbar";
 import Footer from "../../Component/Footer/Footer";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const AddNewProduct = () => {
+  const [images, setImages] = useState({
+    photo1: { base64: "", name: "" },
+    photo2: { base64: "", name: "" },
+    photo3: { base64: "", name: "" },
+    photo4: { base64: "", name: "" },
+  });
+  const handleImageChange = (e, fieldName) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      // Update state with base64 string and image name
+      setImages((prevImages) => ({
+        ...prevImages,
+        [fieldName]: { base64: reader.result },
+      }));
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
-    try {
-      const response = await fetch('http://localhost:3000/addnewproduct', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      
-      if (response.ok) {
-        console.log('Form data sent successfully');
-      } else {
-        console.error('Failed to send form data');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
+   delete data.photo1
+   delete data.photo2
+   delete data.photo3
+   delete data.photo4
+
+    let updatedData = {...data,images}
+    console.log(typeof(updatedData.images));
+    
+   try {
+    await (await fetch('http://localhost:3000/post-products', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedData),
+    })).json();
+   
+  } catch (error) {
+    console.error('Error:', error);
+  }
   };
   return (
     <>
@@ -247,7 +273,8 @@ const AddNewProduct = () => {
         >
           Upload Image 1
         </label>
-        <input type="file" {...register("photo1", { required: true })} />
+        <input type="file" {...register("photo1", { required: true })}  onChange={(e) => handleImageChange(e, "photo1")}
+            accept="image/*" />
         {errors.photo1 && <p className="text-red-500">Photo 1 required</p>}
       </div>
       <div>
@@ -257,7 +284,8 @@ const AddNewProduct = () => {
         >
           Upload Image 2
         </label>
-        <input type="file" {...register("photo2", { required: true })} />
+        <input type="file" {...register("photo2", { required: true })}  onChange={(e) => handleImageChange(e, "photo2")}
+            accept="image/*" />
         {errors.photo2 && <p className="text-red-500">Photo 2 required</p>}
       </div>
       <div>
@@ -267,7 +295,8 @@ const AddNewProduct = () => {
         >
           Upload Image 3
         </label>
-        <input type="file" {...register("photo3", { required: true })} />
+        <input type="file" {...register("photo3", { required: true })}  onChange={(e) => handleImageChange(e, "photo3")}
+            accept="image/*"/>
         {errors.photo3 && <p className="text-red-500">Photo 3 required</p>}
       </div>
       <div>
@@ -277,7 +306,8 @@ const AddNewProduct = () => {
         >
           Upload Image 4
         </label>
-        <input type="file" {...register("photo4", { required: true })} />
+        <input type="file" {...register("photo4", { required: true })}  onChange={(e) => handleImageChange(e, "photo4")}
+            accept="image/*"/>
         {errors.photo4 && <p className="text-red-500">Photo 4 required</p>}
       </div>
       <div>

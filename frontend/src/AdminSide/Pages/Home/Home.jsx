@@ -128,14 +128,14 @@ const Home = () => {
             alt="maincategory"
             className="ml-64"
             id="maincategory"
-            onClick={() =>handleClicks("/AddNewProduct")}
+            onClick={() =>handleClicks("/changeslider")}
           />
           <img
             src={addnewadmin}
             alt="maincategory"
             className="ml-24"
             id="maincategory"
-            onClick={() =>handleClicks("/registration")}
+            onClick={() =>handleClicks("/AdminUser")}
           />
           <img
             src={viewfeedback}
@@ -149,7 +149,7 @@ const Home = () => {
             alt="maincategory"
             className="ml-24"
             id="maincategory"
-            onClick={() =>handleClicks("/viewfeedback")}
+            onClick={() =>handleClicks("/ClientUser")}
           />
           <img
             src={logout}
@@ -164,13 +164,13 @@ const Home = () => {
             Change slider
           </label>
           <label htmlFor="maincategory" className="ml-16 mt-3">
-            Add new admin
+            Admin Users
           </label>
-          <label htmlFor="maincategory" className="ml-16 mt-3">
+          <label htmlFor="maincategory" className="ml-20 mt-3">
             View Feedback
           </label>
-          <label htmlFor="maincategory" className="ml-20 mt-5">
-            Users
+          <label htmlFor="maincategory" className="ml-16 mt-5">
+            Client Users
           </label>
           <label htmlFor="maincategory" className="ml-24 mt-3">
             Logout

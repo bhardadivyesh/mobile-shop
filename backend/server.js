@@ -8,9 +8,8 @@ const otpRoute = require('./route/otp/otpSend')
 const feedback = require('./route/feedback/feedbackRoute')
 const admin = require('./route/setAdmin/setAdminRoute')
 const sliderImage = require('./route/sliderImages/sliderImageRoute')
+const productRoute = require('./route/products/productRoute')
 require('dotenv').config();
-
-
 
 const app = express();
 
@@ -20,7 +19,6 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Connect to MongoDB
-// mongoose.connect('mongodb+srv://testUser:II326v46vW7mulyx@cluster0.cyvyuf0.mongodb.net/demo_auth?retryWrites=true&w=majority')
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
@@ -32,10 +30,7 @@ app.use(otpRoute);
 app.use(feedback);
 app.use(admin);
 app.use(sliderImage);
-
-
-
-
+app.use(productRoute)
 
 // Start the server
 const port = process.env.PORT || 3000;

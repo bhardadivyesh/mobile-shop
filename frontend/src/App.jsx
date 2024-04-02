@@ -5,11 +5,12 @@ import AboutUs from './ClientSide/Pages/AboutUs/AboutUs';
 import ContactUs from "./ClientSide/Pages/ContactUs/ContactUs"
 import Feedback from './ClientSide/Pages/Feedback/Feedback';
 import Product from "./ClientSide/Pages/Product/Product"
-import Login from "./ClientSide/Pages/Login/Login"
-import SignUp from './ClientSide/Pages/SignUp/SignUp';
+import Login from "./Authentication/Login/Login"
+import SignUp from './Authentication/SignUp/SignUp';
+import Cart from "./ClientSide/Pages/Cart/Cart"
+import Invoice from "./ClientSide/Pages/Invoice/Invoice"
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
 import Home from "./AdminSide/Pages/Home/Home"
 import ViewFeedback from "./AdminSide/Pages/ViewFeedback/ViewFeedback"
 import ChangeSlider from "./AdminSide/Pages/ChangeSlider/ChangeSlider"
@@ -23,14 +24,12 @@ import AdminUser from "./AdminSide/ManageUsers/AdminUser/AdminUser"
 import PendingOrder from "./AdminSide/Orders/PendingOrder/PendingOrder"
 import ApprovedOrder from "./AdminSide/Orders/ApprovedOrder/ApprovedOrder"
 import 'react-toastify/dist/ReactToastify.css';
+import {appContext} from "./Context/Context"
 
 function App() {
+  const [cartItems,setCartItems] = useState([])
   const [users, setUsers] = useState([]);
-
-  
-  // console.log(registeredUsers);
-  // const navigate = useNavigate();
-
+  const [registrationData,setRegistrationData] = useState([])
   useEffect(() => {
     axios.get('http://localhost:3000/get-user-registration')
       .then((res) => {
@@ -44,11 +43,11 @@ function App() {
 
 
   return (
+    <appContext.Provider value={{cartItems,setCartItems,registrationData,setRegistrationData}}>
     <Router>
       <Routes>
       <Route path='/' element={<Login />} />
       <Route path='/signUp' element={<SignUp />} />
-
         {users.map(user => {
           if (user.role?.admin) {
             return (
@@ -75,6 +74,10 @@ function App() {
                 <Route path='/contactUs' element={<ContactUs />} />
                 <Route path='/feedback' element={<Feedback />} />
                 <Route path='/product' element={<Product />} />
+                <Route path='/cart' element={<Cart />} />
+                <Route path='/invoice' element={<Invoice />} />
+
+
                 
               </React.Fragment>
             );
@@ -86,6 +89,7 @@ function App() {
         })}
       </Routes>
     </Router>
+    </appContext.Provider>
   );
 }
 

@@ -1,10 +1,10 @@
-import Navbar from "../../component/Navbar/Navbar";
-import Footer from "../../component/Footer/Footer";
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { appContext } from "../../Context/Context";
 const SignUp = () => {
+  const value = useContext(appContext)
   const [base64Image, setBase64Image] = useState(null);
   const {
     register,
@@ -17,7 +17,6 @@ const SignUp = () => {
       let updatedData = { ...data }; 
       delete updatedData.ConfirmPassword;
       updatedData.photo = base64Image
-      console.log(updatedData);
       const imageFile = data.photo[0];
       const reader = new FileReader();
       reader.readAsDataURL(imageFile);
@@ -33,6 +32,7 @@ const SignUp = () => {
       })).json();
       if (response.status === 'OK') {
          toast(response.message);
+         value.setRegistrationData(response.user)
       } else {
         toast(response.message);
       }
@@ -43,7 +43,6 @@ const SignUp = () => {
 
   return (
     <>
-      <Navbar />
       <h2 className="text-4xl text-center dark:text-white p-5">SignUp</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -268,7 +267,6 @@ const SignUp = () => {
        
         <ToastContainer />
       </form>
-      <Footer />
     </>
   );
 };

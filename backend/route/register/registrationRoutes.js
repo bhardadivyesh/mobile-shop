@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../../user');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
+const emailSender = require('../Email/Email')
 
 // post data into the database
 router.post('/post-user-registration', async(req, res) => {
@@ -18,27 +19,8 @@ router.post('/post-user-registration', async(req, res) => {
         }
         const newUser = new User({  email, name,ConfirmPassword,address,city,contactno1,contactno2,gender,password,photo,state,userId,role });
         await newUser.save();
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: 'bhardadivyesh9@gmail.com',
-            pass: 'cdgn pjcx fjqq nneg'
-          }
-        });
-        const mailOptions = {
-          from: 'bhardadivyesh9@gmail.com',
-          to: email,
-          subject: 'Welcome to our app',
-          text: 'You are Registered successfully on the mobile shop app enjoy and explore the app.'
-        };
-        
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.error('Error:', error);
-          } else {
-            // console.log('Email sent:', info.response);
-          }
-        });
+       
+        emailSender.sendWelcomeEmail(email);
         res.json({status:'OK', message: 'User registered successfully', user: newUser });
     } catch (error) {
         console.error('Error registering user:', error);
@@ -57,7 +39,7 @@ router.get('/get-user-registration', async (req, res) => {
   });
 router.delete('/delete-user-registration', async (req, res) => {
     try {
-      const userEmail = req.body.email; // Assuming the email is sent in the request body
+      const userEmail = req.body.email; 
       let deletedUser = await User.findOneAndDelete({ email: userEmail });
       if (!deletedUser) {
         return res.status(404).json({ error: 'User not found' });
@@ -66,7 +48,7 @@ router.delete('/delete-user-registration', async (req, res) => {
       
     } catch (error) {
       
-      res.status(500).json({ error: 'Internal Server Error' }); // Sending error response if something goes wrong
+      res.status(500).json({ error: 'Internal Server Error' }); 
     }
   });
   // put request
@@ -97,11 +79,9 @@ router.post('/login', async (req, res) => {
         delete userData.password
         res.json({ success: true, loginData : userData });
       } else {
-        // Passwords do not match, login failed
         res.json({ success: false, error: 'Incorrect email or password.' });
       }
     } else {
-      // User not found, login failed
       res.json({ success: false, error: 'User not found.' });
     }
   } catch (error) {

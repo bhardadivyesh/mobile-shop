@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import logo from "../../../assets/Sony product/navbar_logo.png";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { appContext } from "../../../Context/Context";
 
 const Navbar = () => {
+  const value = useContext(appContext)
+  console.log();
   const navigate = useNavigate()
   const handleProductClick = (selectedOption) =>{
     if(selectedOption != ""){
@@ -10,12 +14,10 @@ const Navbar = () => {
     }
     
   }
-  const handleLoginClick = () =>{
-    navigate("/")
+  const handleNavigation = (navigateRoutePath) =>{
+    navigate(`${navigateRoutePath}`)
   }
-  const handleSignUpClick = () =>{
-    navigate("/signUp")
-  }
+ 
   return (
     <>
       <nav className="bg-gray-800">
@@ -68,8 +70,12 @@ const Navbar = () => {
               </div>
             </div>
             <img className="h-8 w-8 rounded-full" src={logo} alt="" />
-            <button type="submit" className="text-white pl-3" onClick={handleLoginClick}>Login</button>
-            <button type="submit" className="text-white pl-3" onClick={handleSignUpClick}>Sign Up</button>
+            <label
+             className="text-white pl-5 pr-5 cursor-pointer"
+             onClick={value?.cartItems?.length === 0 ? null : () => handleNavigation('/cart')}
+             >{value?.cartItems?.length}</label>
+            <button type="submit" className="text-white pl-3" onClick={()=>handleNavigation('/')}>Login</button>
+            <button type="submit" className="text-white pl-3" onClick={()=>handleNavigation('/signUp')}>Sign Up</button>
           </div>
         </div>
       </nav>

@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useContext } from "react";
+import { appContext } from "../../Context/Context";
 const Login = () => {
+  const value =useContext(appContext)
+ console.log(value);
   const navigate = useNavigate();
   const {
     register,

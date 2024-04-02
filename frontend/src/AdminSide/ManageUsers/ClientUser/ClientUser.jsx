@@ -26,24 +26,19 @@ const ClientUser = () => {
       });
   };
   const handleAdminButtonClick = (email) => {
-    // console.log(email);
-
     axios
       .put("http://localhost:3000/setAdminRole", { email: email })
       .then((response) => {
         if (response.status === 200) {
           setRerenderComponent((prevState) => !prevState);
-          // You might want to add further handling based on the response data here
         }
       })
       .catch((error) => {
         console.error("Error setting admin:", error);
-        // You might want to handle errors more gracefully here, such as displaying an error message to the user
       });
   };
   const clientUsers = users?.filter(user => user.role.client);
   console.log(clientUsers);
-
   return (
     <>
       <>
