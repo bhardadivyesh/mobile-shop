@@ -1,32 +1,39 @@
 import Navbar from "../../Component/Navbar/Navbar";
 import Footer from "../../Component/Footer/Footer";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import ApiHelper from "../../../Helper/ApiHelper";
 const AdminUser = () => {
   // const [reRenderComponent, setRerenderComponent] = useState(true);
   const [users, setUsers] = useState();
   console.log(users);
   const [reRenderComponent,setRerenderComponent] = useState(false)
   useEffect(() => {
-    axios.get("http://localhost:3000/get-user-registration").then((res) => {
-      setUsers(res.data);
-    });
+    const request = {
+      path: `get-user-registration`,
+    };
+    const fetchData = async () => {
+      try {
+        const response = await ApiHelper.get(request);
+        console.log(response.data);
+        setUsers(response.data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    fetchData();
+   
   }, [reRenderComponent]);
 
   const adminUsers = users?.filter((user) => user.role.admin);
-  const handleDeleteButtonClick = (email) => {
-    axios
-      .delete("http://localhost:3000/delete-user-registration", {
-        data: { email: email },
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          setRerenderComponent((prevState) => !prevState);
-        }
-      })
-      .catch((error) => {
-        console.error("Error deleting feedback:", error);
-      });
+  const handleDeleteButtonClick =async (email) => {
+    const request ={
+      path:`delete-user-registration`,
+      data : email
+    }
+    const res =  await ApiHelper.delete(request)
+    if(res != null){
+     setRerenderComponent((prevState) => !prevState);
+    }
   };
   return (
     <>

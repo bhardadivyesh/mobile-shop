@@ -1,31 +1,27 @@
 import Navbar from "../../Component/Navbar/Navbar"
 import Footer from "../../Component/Footer/Footer"
 import { useEffect } from "react"
-import axios from "axios"
 import { useState } from "react"
+import ApiHelper from "../../../Helper/ApiHelper"
 const ViewFeedback = () => {
-    // const [reRenderComponent,setRerenderComponent] = useState(false)
     const [feedbackData,setFeedbackData] = useState([])
     useEffect(()=>{
-        axios.get('http://localhost:3000/get-feedback').then((res)=>{
-            setFeedbackData(res.data)
-        })
-    
+        const request = {
+            path: `get-feedback`,
+          };
+          const fetchData = async () => {
+              const response = await ApiHelper.get(request);
+              console.log(response.data);
+              setFeedbackData(response.data);
+            }
+          fetchData();
     },[])
-const handleDeleteFeedback = (email) =>{
-   
-    axios.delete('http://localhost:3000/delete-feedback', {
-      data: { email: email }
-    })
-    .then(response => {
-        if (response.status === 200) {
-            // setRerenderComponent(prevState => !prevState) 
-        }
-    })
-    .catch(error => {
-      console.error('Error deleting feedback:', error);
-     
-    });
+const handleDeleteFeedback = async(email) =>{
+    const request ={
+      path:`delete-feedback`,
+      data : email
+    }
+      await ApiHelper.delete(request)
     }
   return (
     <>

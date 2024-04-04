@@ -2,7 +2,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useState,useEffect } from 'react';
-import axios from 'axios'
+import ApiHelper from '../../../Helper/ApiHelper';
 
 const settings = {
   dots: true,
@@ -17,9 +17,15 @@ const settings = {
 const ImageSlider = () => {
   const [sliderImages,setSliderImages] = useState({})
   useEffect(()=>{
-    axios.get('http://localhost:3000/get-imageSlider').then((res)=>{
-      setSliderImages(res.data)
-    })
+    const request = {
+      path: `get-imageSlider`,
+    };
+    const fetchData = async () => {
+        const response = await ApiHelper.get(request);
+        console.log(response.data);
+        setSliderImages(response.data);
+      }
+    fetchData();
   },[])
   return (
     <>

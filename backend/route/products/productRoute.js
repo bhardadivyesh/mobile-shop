@@ -43,7 +43,6 @@ router.get("/get-product", async (req, res) => {
 router.put('/put-product', async (req, res) => {
   try {
     const productName = req.body.data.productname; 
-    console.log(productName);
     const softDelete = true
     
     let updatedDeleteProduct = await product.findOneAndUpdate({ productname: productName },  { softDelete: softDelete }, { new: true });

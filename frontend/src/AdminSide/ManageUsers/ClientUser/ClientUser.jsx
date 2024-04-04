@@ -1,44 +1,43 @@
 import Navbar from "../../Component/Navbar/Navbar";
 import Footer from "../../Component/Footer/Footer";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import ApiHelper from "../../../Helper/ApiHelper";
 const ClientUser = () => {
   const [reRenderComponent, setRerenderComponent] = useState(true);
   const [users, setUsers] = useState();
   useEffect(() => {
-    axios.get("http://localhost:3000/get-user-registration").then((res) => {
-      setUsers(res.data);
-    });
+    const request = {
+      path: `get-user-registration`,
+    };
+    const fetchData = async () => {
+        const response = await ApiHelper.get(request);
+        console.log(response.data);
+        setUsers(response.data);
+      }
+    fetchData();
   }, [reRenderComponent]);
  
-  const handleDeleteButtonClick = (email) => {
-    axios
-      .delete("http://localhost:3000/delete-user-registration", {
-        data: { email: email },
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          setRerenderComponent((prevState) => !prevState);
-        }
-      })
-      .catch((error) => {
-        console.error("Error deleting feedback:", error);
-      });
+  const handleDeleteButtonClick =async (email) => {
+    const request ={
+      path:`delete-user-registration`,
+      data : email
+    }
+    const res =  await ApiHelper.delete(request)
+    if(res != null){
+     setRerenderComponent((prevState) => !prevState);
+    }
   };
-  const handleAdminButtonClick = (email) => {
-    axios
-      .put("http://localhost:3000/setAdminRole", { email: email })
-      .then((response) => {
-        if (response.status === 200) {
-          setRerenderComponent((prevState) => !prevState);
-        }
-      })
-      .catch((error) => {
-        console.error("Error setting admin:", error);
-      });
+  const handleAdminButtonClick = async(email) => {
+    const request ={
+      path:`setAdminRole`,
+      data : email
+    }
+    const res =  await ApiHelper.put(request)
+    if(res != null){
+     setRerenderComponent((prevState) => !prevState);
+    }
   };
   const clientUsers = users?.filter(user => user.role.client);
-  console.log(clientUsers);
   return (
     <>
       <>

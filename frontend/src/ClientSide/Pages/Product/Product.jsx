@@ -2,20 +2,23 @@ import { Link } from "react-router-dom";
 import Navbar from "../../component/Navbar/Navbar"
 import Footer from "../../component/Footer/Footer"
 import { useEffect, useState,useContext } from "react";
-
-import axios from "axios"
 import { appContext } from "../../../Context/Context";
+import ApiHelper from "../../../Helper/ApiHelper";
 const Product = () =>{
   const value = useContext(appContext)
   const [productData,setProductData] = useState()
   useEffect(()=>{
-    axios.get('http://localhost:3000/get-product').then((res)=>{
-      setProductData(res.data)
-    })
+    const request = {
+      path: `get-product`,
+    };
+    const fetchData = async () => {
+        const response = await ApiHelper.get(request);
+        console.log(response.data);
+        setProductData(response.data);
+      }
+    fetchData();
   },[])
   const handleCartClick = (productItems) =>{
-    // const updatedValue = {...value.cartItems,...productItems}
-    // value.setCartItems(updatedValue)
     value.setCartItems(prevCartItems => [...prevCartItems, productItems]);
   }
     return(

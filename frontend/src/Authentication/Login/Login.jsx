@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useContext } from "react";
 import { appContext } from "../../Context/Context";
+import ApiHelper from "../../Helper/ApiHelper";
 const Login = () => {
   const value =useContext(appContext)
  console.log(value);
@@ -14,23 +14,19 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    try {
-      const { email, password } = data;
-      axios
-        .post("http://localhost:3000/login", { email, password })
-        .then((res) => {
-          if (res.data.loginData?.role?.client) {
-            navigate("/home");
-          } else if (res.data.loginData?.role?.admin) {
-            navigate("/adminHome");
-          } else {
-            toast("Invalid Email and Password");
-          }
-        });
-    } catch (error) {
-      console.error("Error logging in:", error);
+  const  onSubmit = async (data) => {
+   const request ={
+      path:`login`,
+      data : data
     }
+    const res =  await ApiHelper.post(request)
+      if (res.loginData?.role?.client) {
+          navigate("/home");
+        } else if (res.loginData?.role?.admin) {
+          navigate("/adminHome");
+        } else {
+          toast("Invalid Email and Password");
+        }
   };
   const handleSignUpClick = () => {
     navigate("/signUp");

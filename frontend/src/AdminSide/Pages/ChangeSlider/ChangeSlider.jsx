@@ -1,7 +1,7 @@
 import {useState,useEffect } from "react";
 import Navbar from "../../Component/Navbar/Navbar";
 import Footer from "../../Component/Footer/Footer";
-import axios from "axios";
+import ApiHelper from "../../../Helper/ApiHelper";
 
 function ImageUploader() {
   const [sliderImages,setSliderImages] = useState({})
@@ -65,9 +65,15 @@ function ImageUploader() {
   };
   
   useEffect(()=>{
-    axios.get('http://localhost:3000/get-imageSlider').then((res)=>{
-      setSliderImages(res.data)
-    })
+    const request = {
+      path: `get-imageSlider`,
+    };
+    const fetchData = async () => {
+        const response = await ApiHelper.get(request);
+        console.log(response.data);
+        setSliderImages(response.data);
+      }
+    fetchData();
   },[])
 
   return (

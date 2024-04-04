@@ -3,6 +3,7 @@ import Footer from "../../Component/Footer/Footer";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import ApiHelper from "../../../Helper/ApiHelper";
 
 const ManageProduct = () => {
   const [productData, setProductData] = useState();
@@ -13,12 +14,17 @@ const ManageProduct = () => {
     navigate("/AddNewProduct");
   };
   useEffect(() => {
-    axios.get("http://localhost:3000/get-product").then((res) => {
-      setProductData(res.data);
-    });
+    const request = {
+      path: `get-product`,
+    };
+    const fetchData = async () => {
+        const response = await ApiHelper.get(request);
+        console.log(response.data);
+        setProductData(response.data);
+      }
+    fetchData();
   }, [reRenderComponent]);
-  const handleDeleteBtnClick = (productname) =>{
-    console.log(productname);
+  const handleDeleteBtnClick = async(productname) =>{
     axios.put("http://localhost:3000/put-product", {
       data: { productname: productname },
     })
@@ -32,7 +38,6 @@ const ManageProduct = () => {
     });
   }
   return (
-    <>
       <>
         <Navbar />
         <h1 className="text-2xl font-medium dark:text-white text-center m-5">
@@ -140,9 +145,7 @@ const ManageProduct = () => {
             </tbody>
           </table>
         </div>
-
         <Footer />
-      </>
     </>
   );
 };
